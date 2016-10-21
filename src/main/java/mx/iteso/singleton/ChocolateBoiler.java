@@ -6,16 +6,26 @@ package mx.iteso.singleton;
 public class ChocolateBoiler {
     private boolean empty;
     private boolean boiled;
-    private ChocolateBoiler uniqueInstance;
+    private static volatile ChocolateBoiler uniqueInstance;
+    private static final Object lock = new Object();
 
     private ChocolateBoiler() {
         empty = true;
         boiled = false;
     }
 
-    public ChocolateBoiler getInstance() {
-
-        return uniqueInstance;
+    public ChocolateBoiler getInstanceDoubleCheck() {
+        ChocolateBoiler instance = uniqueInstance;
+        if (instance == null) {
+            synchronized (lock) {
+                instance = uniqueInstance;
+                if (instance == null) {
+                    instance = new ChocolateBoiler();
+                    uniqueInstance = instance;
+                }
+            }
+        }
+        return instance;
     }
 
     public void fill() {
