@@ -17,7 +17,7 @@ public class ChocolateBoilerOnDemand {
     }
 
 
-    public ChocolateBoilerOnDemand getInstanceOnDemand() {
+    public static ChocolateBoilerOnDemand getInstance() {
         return Loader.instance;
     }
 

@@ -1,6 +1,6 @@
 package mx.iteso;
 
-import mx.iteso.singleton.ChocolateBoiler;
+import mx.iteso.singleton.ChocolateBoilerOnDemand;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,7 +9,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by Saúl on 21/10/2016.
  */
-public class ChocolateBoilerTest {
+public class ChocolateBoilerOnDemandTest {
     @Test
     public synchronized void testSynch() throws Exception {
         CountDownLatch startSignal = new CountDownLatch(1);
@@ -42,14 +42,14 @@ public class ChocolateBoilerTest {
 
     @Test
     public void fillTest() {
-        ChocolateBoiler chocolateBoiler = ChocolateBoiler.getInstance();
+        ChocolateBoilerOnDemand chocolateBoiler = ChocolateBoilerOnDemand.getInstance();
         chocolateBoiler.fill();
         Assert.assertEquals(chocolateBoiler.isEmpty(), false);
     }
 
     @Test
     public void drainTest() {
-        ChocolateBoiler chocolateBoiler = ChocolateBoiler.getInstance();
+        ChocolateBoilerOnDemand chocolateBoiler = ChocolateBoilerOnDemand.getInstance();
         chocolateBoiler.drain();
         chocolateBoiler.boil();
         Assert.assertEquals(chocolateBoiler.isEmpty(), true);
@@ -57,7 +57,7 @@ public class ChocolateBoilerTest {
 
     @Test
     public void boilTest() {
-        ChocolateBoiler chocolateBoiler = ChocolateBoiler.getInstance();
+        ChocolateBoilerOnDemand chocolateBoiler = ChocolateBoilerOnDemand.getInstance();
         chocolateBoiler.fill();
         chocolateBoiler.boil();
         Assert.assertEquals(chocolateBoiler.isBoiled(), true);
@@ -66,7 +66,7 @@ public class ChocolateBoilerTest {
     class ChocolateThread implements Runnable {
         CountDownLatch startSignal;
         CountDownLatch doneSignal;
-        ChocolateBoiler chocolateBoiler;
+        ChocolateBoilerOnDemand chocolateBoiler;
 
         public ChocolateThread(CountDownLatch startSignal, CountDownLatch doneSignal) {
             this.chocolateBoiler = null;
@@ -74,14 +74,14 @@ public class ChocolateBoilerTest {
             this.doneSignal = doneSignal;
         }
 
-        public ChocolateBoiler getChocolateBoiler() {
+        public ChocolateBoilerOnDemand getChocolateBoiler() {
             return chocolateBoiler;
         }
 
         public void run() {
             try {
                 startSignal.await();
-                this.chocolateBoiler = ChocolateBoiler.getInstance();
+                this.chocolateBoiler = ChocolateBoilerOnDemand.getInstance();
                 doneSignal.countDown();
             } catch (Exception e) {
                 e.printStackTrace();
