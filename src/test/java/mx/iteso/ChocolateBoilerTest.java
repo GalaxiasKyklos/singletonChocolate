@@ -1,6 +1,7 @@
 package mx.iteso;
 
 import mx.iteso.singleton.ChocolateBoiler;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -50,8 +51,8 @@ public class ChocolateBoilerTest {
     @Test
     public void drainTest() {
         ChocolateBoiler chocolateBoiler = ChocolateBoiler.getInstance();
-        chocolateBoiler.drain();
         chocolateBoiler.boil();
+        chocolateBoiler.drain();
         Assert.assertEquals(chocolateBoiler.isEmpty(), true);
     }
 

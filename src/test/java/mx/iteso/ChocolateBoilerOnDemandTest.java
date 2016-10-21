@@ -11,7 +11,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class ChocolateBoilerOnDemandTest {
     @Test
-    public synchronized void testSynch() throws Exception {
+    public synchronized void testSync() throws Exception {
         CountDownLatch startSignal = new CountDownLatch(1);
         CountDownLatch doneSignal = new CountDownLatch(2);
 
@@ -50,8 +50,9 @@ public class ChocolateBoilerOnDemandTest {
     @Test
     public void drainTest() {
         ChocolateBoilerOnDemand chocolateBoiler = ChocolateBoilerOnDemand.getInstance();
-        chocolateBoiler.drain();
         chocolateBoiler.boil();
+        chocolateBoiler.drain();
+
         Assert.assertEquals(chocolateBoiler.isEmpty(), true);
     }
 
