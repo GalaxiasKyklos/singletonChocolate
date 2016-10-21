@@ -17,6 +17,7 @@ public class ChocolateBoiler {
     // Double check method
     public static ChocolateBoiler getInstance() {
         ChocolateBoiler instance = uniqueInstance;
+
         if (instance == null) {
             synchronized (lock) {
                 instance = uniqueInstance;

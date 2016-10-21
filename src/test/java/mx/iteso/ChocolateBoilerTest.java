@@ -25,8 +25,10 @@ public class ChocolateBoilerTest {
             instances[i].start();
 
         }
+
         startSignal.countDown();
         doneSignal.await();
+
         for (int i = 0; i < 2; i++) {
             for (int j = i; j < instances.length; j++) {
                 if (instance[i].getChocolateBoiler() != instance[j].getChocolateBoiler())
